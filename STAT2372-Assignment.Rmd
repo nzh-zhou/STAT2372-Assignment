@@ -1,0 +1,37 @@
+---
+title: "STAT2372 Assignment"
+author: "Ze Hong Zhou"
+date: '`r paste0("2022-05-16 (last edited ", format(Sys.time(), "%Y-%m-%d"), ")")`'
+output:
+  bookdown::pdf_document2:
+    toc: false
+    number_sections: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(number_sections = FALSE)
+```
+
+The original source code for this assignment can be found [here](https://github.com/nzh-zhou/STAT2372-Assignment) after I make the repo public.
+
+# Question 1
+
+(a) **Let X be a random variable with mean 0 and finite variance $\sigma^2$. By applying Markov’s inequality to the random variable $W = (X+t)^2$, where $t > 0$, show that**
+
+\begin{equation*}
+P(X>a) \leq \frac{\sigma^2}{\sigma^2+a^2}\;\;\text{ \textbf{for any $a>0$.}}
+\end{equation*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
