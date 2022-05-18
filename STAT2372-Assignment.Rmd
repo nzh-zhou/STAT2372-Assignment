@@ -6,21 +6,237 @@ output:
   bookdown::pdf_document2:
     toc: false
     number_sections: false
+    extra_dependencies: ["enumitem"]
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(number_sections = FALSE)
 ```
 
+```{r, message = FALSE}
+library(tidyverse)
+```
+
 The original source code for this assignment can be found [here](https://github.com/nzh-zhou/STAT2372-Assignment) after I make the repo public.
+
+\renewcommand{\labelenumi}{\textbf{(\alph{enumi})}}
+\renewcommand{\labelenumii}{\textbf{(\roman{enumii})}}
+\newcommand{\benum}{\begin{enumerate}[resume]}
+\newcommand{\eenum}{\end{enumerate}}
 
 # Question 1
 
-(a) **Let X be a random variable with mean 0 and finite variance $\sigma^2$. By applying Markov’s inequality to the random variable $W = (X+t)^2$, where $t > 0$, show that**
+\begin{enumerate}
+  \item \textbf{Let $X$ be a random variable with mean $0$ and finite variance $\sigma^2$. By applying Markov’s inequality to the random variable $W = (X+t)^2$, where $t > 0$, show that}
+  \begin{equation*}
+  P(X \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}\;\;\textbf{ for any $a>0$.}
+  \end{equation*}
+\end{enumerate}
 
-\begin{equation*}
-P(X>a) \leq \frac{\sigma^2}{\sigma^2+a^2}\;\;\text{ \textbf{for any $a>0$.}}
-\end{equation*}
+\begin{align*}
+P(X \geq a) &= P(X+t > a+t) \\
+&\leq P((X+t)^2 > (a+t)^2) \\
+&\leq \frac{E((X+t)^2)}{(a+t)^2}\;\;\text{ from applying Markov's inequality} \\
+&= \frac{E(X^2)+2tE(X)+t^2}{(a+t)^2} \\
+&= \frac{\sigma^2+t^2}{(a+t)^2}\;\;\text{ since $E(X) = 0$.}
+\end{align*}
+Let $f(t) = \frac{\sigma^2+t^2}{(a+t)^2}$. Let the stationary point of $f(t)$ occur when $t = t_m$.
+\begin{align*}
+0 &= f'(t_m) \\
+&= \frac{(a+t_m)^2\cdot 2t_m - (\sigma^2+t_m^2)(2(a+t_m))}{(a+t_m)^4} \\
+0 &= (a+t_m)^2\cdot 2t_m - (\sigma^2+t_m^2)(2(a+t_m)) \\
+&= (a+t_m)(2at_m+2t_m^2 - 2\sigma^2-2t_m^2) \\
+&= 2(a+t_m)(at_m-\sigma^2) \\
+t_m &= \frac{\sigma^2}{a}\;\;\text{ since $t>0$.}
+\end{align*}
+Substituting $t=t_m$ into the inequality,
+\begin{align*}
+P(X \geq a) &\leq \frac{\sigma^2 + \frac{\sigma^4}{a^2}}{(a+\frac{\sigma^2}{a})^2} \\
+&= \frac{\frac{\sigma^2}{a}(a + \frac{\sigma^2}{a})}{(a+\frac{\sigma^2}{a})^2} \\
+&= \frac{\frac{\sigma^2}{a}}{a+\frac{\sigma^2}{a}} \\
+P(X \geq a) &\leq \frac{\sigma^2}{\sigma^2+a^2}.
+\end{align*}
+&nbsp;  
+\begin{enumerate}[resume]
+  \item \textbf{Hence show that, for any $a > 0$,}
+  \begin{align*}
+  P(Y \geq \mu + a) &\leq \frac{\sigma^2}{\sigma^2+a^2} \\
+  P(Y \leq \mu - a) &\leq \frac{\sigma^2}{\sigma^2+a^2}
+  \end{align*}
+  \textbf{where $E(Y)=\mu$, $Var(Y) = \sigma^2$.}
+\end{enumerate}
+
+\begin{align*}
+\begin{split}
+E(Y - \mu) = E(Y) - \mu &= 0. \\
+Var(Y-\mu) = Var(Y) &= \sigma^2.
+\end{split}
+\intertext{Similarly,}
+\begin{split}
+E(\mu - Y) &= 0. \\
+Var(\mu - Y) &= \sigma^2.
+\end{split}
+\end{align*}
+Applying the result in part (a),
+\begin{align*}
+P(Y \geq \mu + a) &= P(Y - \mu \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}. \\
+P(Y \leq \mu - a) &= P(\mu - Y \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}.
+\end{align*}
+&nbsp;  
+
+# Question 2
+
+\begin{enumerate}
+  \item \textbf{Let $X$ have a Poisson distribution with parameter $\lambda$.}
+  
+  \begin{enumerate}
+    \item \textbf{Determine $K_X(t)$, the cumulant generating function. Hence find the third and the fourth central moments of $X$.}
+  \end{enumerate}
+  
+  \begin{align*}
+  K_X(t) &= \log(E(e^{tX})) \\
+  &= \log\left(\sum_{k=0}^{\infty}\left(e^{tk}\frac{e^{-\lambda}\lambda^k}{k!}\right)\right) \\
+  &= \log\left(e^{-\lambda}\sum_{k=0}^{\infty}\left(\frac{\left(\lambda e^{t}\right)^k}{k!}\right)\right) \\
+  &= \log\left(e^{-\lambda}e^{\lambda e^t}\right)\;\;\text{ (series expansion of an exponential function)} \\
+  &= \lambda(e^t-1).
+  \end{align*}
+  \begin{align*}
+  \mu_3 &= K_{X}^{(3)}(0)           &       \sigma^2 &= K_{X}^{(2)}(0) \\
+        &= \lambda e^0              &                &= \lambda \\
+  \mu_3 &= \lambda.                 &       \mu_4-3\sigma^4 &= K_{X}^{(4)}(0) \\
+  &&                                        \mu_4 &= \lambda + 3\lambda^2.
+  \end{align*}
+  \\
+  \begin{enumerate}[resume]
+    \item \textbf{Show that the moment-generating function of $Y = (X-\lambda)/\sqrt{\lambda}$ is given by}
+    \begin{equation*}
+    M_Y(t) = \exp\left(\lambda e^{t/\sqrt{\lambda}}-\sqrt{\lambda}t-\lambda\right)\textbf{.}
+    \end{equation*}
+  \end{enumerate}
+  
+  \begin{align*}
+  M_Y(t) &= E\left(\exp\left(\frac{X-\lambda}{\sqrt{\lambda}}t\right)\right) \\
+  &= E\left(\exp\left(\frac{Xt}{\sqrt{\lambda}}\right)\cdot\exp\left(-\sqrt{\lambda}t\right)\right) \\
+  &= e^{-\sqrt{\lambda}t}\sum_{k=0}^{\infty}\left(e^{\frac{kt}{\sqrt\lambda}}\frac{e^{-\lambda}\lambda^k}{k!}\right) \\
+  &= e^{-\sqrt{\lambda}t-\lambda}\sum_{k=0}^{\infty}\left(\frac{\left(e^{\frac{t}{\sqrt\lambda}}\lambda\right)^k}{k!}\right) \\
+  &= e^{-\sqrt{\lambda}t-\lambda}\exp\left({e^{\frac{t}{\sqrt\lambda}}\lambda}\right) \\
+  &= \exp\left(\lambda e^{t/\sqrt{\lambda}}-\sqrt{\lambda}t-\lambda\right).
+  \end{align*}
+  \\
+  \begin{enumerate}[resume]
+    \item \textbf{Use the expansion}
+    \begin{equation*}
+    e^{t/\sqrt\lambda} = \sum_{i=0}^{\infty}\left(\frac{(t/\sqrt\lambda)^i}{i!}\right)
+    \end{equation*}
+    \textbf{to show that}
+    \begin{equation*}
+    \lim_{\lambda\to\infty}(M_Y(t)) = e^{t^2/2}
+    \end{equation*}
+    \textbf{and hence show that the distribution function of $Y$ converges to a standard normal distribution function as $\lambda\to\infty$.}
+  \end{enumerate}
+  
+  \begin{align*}
+  \lim_{\lambda\to\infty}(M_Y(t)) &= \lim_{\lambda\to\infty}\left(\exp\left[\lambda e^{t/\sqrt{\lambda}}-\sqrt{\lambda}t-\lambda\right]\right) \\
+  &= \lim_{\lambda\to\infty}\left(\exp\left[\lambda \sum_{i=0}^{\infty}\left(\frac{(t/\sqrt\lambda)^i}{i!}\right) - \sqrt{\lambda}t - \lambda\right]\right) \\
+  &= \lim_{\lambda\to\infty}\left(\exp\left[\lambda \sum_{i=2}^{\infty}\left(\frac{(t/\sqrt\lambda)^i}{i!}\right)\right]\right) \\
+  &= \lim_{\lambda\to\infty}\left(\exp\left[t^2 \sum_{i=2}^{\infty}\left(\frac{(t/\sqrt\lambda)^{i-2}}{i!}\right)\right]\right) \\
+  &= \exp\left[t^2 \lim_{\lambda\to\infty}\left(\sum_{i=2}^{\infty}\left(\frac{(t/\sqrt\lambda)^{i-2}}{i!}\right)\right)\right] \\
+  &= \exp\left[t^2\left(1/2 + \lim_{\lambda\to\infty} \left[\sum_{i=3}^{\infty} \left(\frac{(t/\sqrt\lambda)^{i-2}}{i!}\right)\right]\right)\right] \\
+  &= e^{t^2/2}.
+  \end{align*}
+  This is the mgf of a standard normal distribution. That is, $\lim_{\lambda\to\infty}(M_Y(t)) = M_Z(t)$. The random variable $Y$ converges in distribution to a standard normal random variable as $\lambda\to\infty$.
+  \\
+  \item \textbf{$X$, the number of accidents per year at a given intersection, is assumed to have a Poisson distribution. Over the past few years, an average of 36 accidents per year have occurred at this intersection. If the number of accidents per year is at least 45, an intersection can qualify to be redesigned under an emergency program set up by the state. Approximate the probability that this intersection will come under the emergency program at the end of the next year.}
+\end{enumerate}
+
+Let $X \sim \text{Pois}(36)$.
+\begin{align*}
+P(X \geq 45) &= 1 - P(X \leq 44) \\
+&= `r (x <- ((1 - ppois(44, 36)) %>% round(4) %>% format(nsmall = 4)))`.
+\end{align*}
+Hence, the probability that this intersection will come under the emergency program at the end of the next year is `r x`.
+
+&nbsp;
+
+Inline code used:
+
+```{r}
+(1 - ppois(44, 36)) %>% round(4) %>% format(nsmall = 4)
+```
+&nbsp;  
+
+\benum
+  \item \textbf{Suppose $V_i$, $i \in [1, n] \cap \mathbb{N}$, are independent exponential random variables with rate 1. Denote}
+  \begin{equation*}
+  X = \max\left(\left\{n : \sum_{i=1}^{n}\left(V_i\right) \leq \lambda \right\}\right)\textbf{,}
+  \end{equation*}
+  \textbf{so $X$ can be thought of as being the maximum number of exponentials having rate 1 that can be summed and still be less than or equal to $\lambda$.}
+  \begin{enumerate}
+    \item \textbf{Using properties of a Poisson process with rate 1, explain why $X$ has a Poisson distibution with parameter $\lambda$.}
+  \end{enumerate}
+  The exponential distribution with parameter 1 can be defined as the distribution for the random variable that represents the time between two successive events in the Poisson process with parameter 1. Let $\{Y(t) : t\geq0\}$ be this particular Poisson process. Thus, the random variable $X$ represents the number of times that the time between two successive events has been observed within a time period of $\lambda$ in $\{Y(t) : t\geq0\}$. Since this is the same as the number of events that have occurred within this time period, $X \sim Y(t_0+\lambda)-Y(t_0) \sim \text{Pois}(\lambda)$, where $t_0 > 0$.  
+  &nbsp;  
+  \begin{enumerate}[resume]
+    \item \textbf{Let $V_i = -log(U_i)$, $U_i \sim \text{Uniform}(0,1)$, for all $i \in [1, n] \cap \mathbb{N}$. Show that}
+    \begin{equation}
+    X = \max\left(\left\{n : \prod_{i=1}^{n}(U_i) \geq e^{-\lambda}\right\}\right)\textbf{,}\label{eq:1}
+    \end{equation}
+    \textbf{where $\prod_{i=1}^{0}(U_i) = 1$.}
+  \end{enumerate}
+  \begin{align*}
+  \lambda &\geq \sum_{i=1}^{n}(V_i) \\
+  &= \sum_{i=1}^{n}(-\log(U_i)) \\
+  &= -\log\left(\prod_{i=1}^{n}\left(U_i\right)\right) \\
+  \log\left(\prod_{i=1}^{n}\left(U_i\right)\right) &\geq -\lambda \\
+  \prod_{i=1}^{n}\left(U_i\right) &\geq e^{-\lambda}.
+  \end{align*}
+  Hence,
+  \begin{align*}
+  X &= \max\left(\left\{n : \sum_{i=1}^{n}\left(V_i\right) \leq \lambda \right\}\right) \\
+  &= \max\left(\left\{n : \prod_{i=1}^{n}\left(U_i\right) \geq e^{-\lambda} \right\}\right).
+  \end{align*}
+  &nbsp;  
+  \begin{enumerate}[resume]
+    \item \textbf{It can be shown that @ref(eq:1) is equivalent to}
+    \begin{equation*}
+    X = \min\left(\left\{n : \prod_{i=1}^{n}\left(U_i\right) < e^{-\lambda} \right\}\right) - 1\textbf{.}
+    \end{equation*}
+    \textbf{This result may be used to simulate a Poisson random variable with parameter $\lambda$. If we continue generating Uniform(0, 1) random variables $U_i$ until their product falls below $e^{-\lambda}$, then the number required, minus 1, is Poisson with parameter $\lambda$. Implement this procedure in R to generate 1000 realizations of a Poisson random variable with parameter $\lambda = 5$. Produce the histogram of the generated values $\{x_i : i \in [1, 1000] \cap \mathbb{N}\}$. Find the mean of these values, and compare with its theoretical counterpart.}
+  \end{enumerate}
+```{r}
+set.seed(46375058)
+elam <- exp(-5) # e to the power of negative lambda
+x_i <- rep(1 - 1, times = 1000) # all x_i start at 0
+prod <- runif(1000, 0, 1) # starting test values
+logic_test <- prod >= elam # check which x_i needs adjustment
+
+while (FALSE == all(!logic_test)) {
+  t <- sum(logic_test) # number of x_i that will increase by 1
+  x_i[logic_test] <- x_i[logic_test] + rep(1, times = t) # increase required x_i by 1
+  prod[logic_test] <- prod[logic_test] * runif(t, 0, 1) # change required test values
+  logic_test <- prod >= elam # check which x_i needs adjustment
+}
+
+ggplot(tibble(x_i = x_i)) + 
+  geom_histogram(aes(x = x_i, y = ..count../sum(..count..)), binwidth = 1) + 
+  labs(title = "Histogram of Simulated Values of X", 
+       x = "value", y = "proportion")
+
+(mu <- mean(x_i))
+```
+  The mean of the simulation data is `r mu %>% round(4) %>% format(nsmall = 4)`, while the theoretical mean is 5. The relative error is `r ((mu-5)/5) %>% round(4) %>% format(nsmall = 4)`. A low absolute relative error and a histogram shaped like a Poisson distribution provides empirical evidence that $X$ is distributed as a Poisson distribution.
+  
+\eenum
+&nbsp;  
+
+# Question 3
+
+
+
+
+
+
+
 
 
 
