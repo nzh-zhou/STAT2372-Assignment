@@ -1,12 +1,24 @@
 ---
 title: "STAT2372 Assignment"
-author: "Ze Hong Zhou"
+author: "Ze Hong Zhou (46375058)"
 date: '`r paste0("2022-05-16 (last edited ", format(Sys.time(), "%Y-%m-%d"), ")")`'
 output:
   bookdown::pdf_document2:
     toc: false
     number_sections: false
     extra_dependencies: ["enumitem"]
+header-includes:
+  - \renewcommand{\labelenumi}{\textbf{(\alph{enumi})}}
+  - \renewcommand{\labelenumii}{\textbf{(\roman{enumii})}}
+  - \newcommand{\benum}{\begin{enumerate}[resume]}
+  - \newcommand{\eenum}{\end{enumerate}}
+  - \allowdisplaybreaks
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \fancyhead[L]{Ze Hong Zhou}
+  - \fancyhead[R]{46375058}
+  - \fancyfoot[C]{Page \thepage}
 ---
 
 ```{r setup, include=FALSE}
@@ -17,12 +29,16 @@ knitr::opts_chunk$set(number_sections = FALSE)
 library(tidyverse)
 ```
 
-The original source code for this assignment can be found [here](https://github.com/nzh-zhou/STAT2372-Assignment) after I make the repo public.
+\fancypagestyle{firststyle}{
+   \fancyhf{}
+   \fancyhead[L]{Ze Hong Zhou}
+   \fancyhead[R]{46375058}
+   \fancyfoot[C]{Page \thepage}
+   \renewcommand{\headrulewidth}{0pt}
+}
+\thispagestyle{firststyle}
 
-\renewcommand{\labelenumi}{\textbf{(\alph{enumi})}}
-\renewcommand{\labelenumii}{\textbf{(\roman{enumii})}}
-\newcommand{\benum}{\begin{enumerate}[resume]}
-\newcommand{\eenum}{\end{enumerate}}
+The original source code for this assignment can be found [\textcolor{blue}{here}](https://github.com/nzh-zhou/STAT2372-Assignment) after I make the repo public.
 
 # Question 1
 
@@ -32,7 +48,6 @@ The original source code for this assignment can be found [here](https://github.
   P(X \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}\;\;\textbf{ for any $a>0$.}
   \end{equation*}
 \end{enumerate}
-
 \begin{align*}
 P(X \geq a) &= P(X+t > a+t) \\
 &\leq P((X+t)^2 > (a+t)^2) \\
@@ -57,6 +72,7 @@ P(X \geq a) &\leq \frac{\sigma^2 + \frac{\sigma^4}{a^2}}{(a+\frac{\sigma^2}{a})^
 P(X \geq a) &\leq \frac{\sigma^2}{\sigma^2+a^2}.
 \end{align*}
 &nbsp;  
+
 \begin{enumerate}[resume]
   \item \textbf{Hence show that, for any $a > 0$,}
   \begin{align*}
@@ -65,7 +81,6 @@ P(X \geq a) &\leq \frac{\sigma^2}{\sigma^2+a^2}.
   \end{align*}
   \textbf{where $E(Y)=\mu$, $Var(Y) = \sigma^2$.}
 \end{enumerate}
-
 \begin{align*}
 \begin{split}
 E(Y - \mu) = E(Y) - \mu &= 0. \\
@@ -88,11 +103,9 @@ P(Y \leq \mu - a) &= P(\mu - Y \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}.
 
 \begin{enumerate}
   \item \textbf{Let $X$ have a Poisson distribution with parameter $\lambda$.}
-  
   \begin{enumerate}
     \item \textbf{Determine $K_X(t)$, the cumulant generating function. Hence find the third and the fourth central moments of $X$.}
   \end{enumerate}
-  
   \begin{align*}
   K_X(t) &= \log(E(e^{tX})) \\
   &= \log\left(\sum_{k=0}^{\infty}\left(e^{tk}\frac{e^{-\lambda}\lambda^k}{k!}\right)\right) \\
@@ -106,14 +119,14 @@ P(Y \leq \mu - a) &= P(\mu - Y \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}.
   \mu_3 &= \lambda.                 &       \mu_4-3\sigma^4 &= K_{X}^{(4)}(0) \\
   &&                                        \mu_4 &= \lambda + 3\lambda^2.
   \end{align*}
-  \\
+  ~  
+  
   \begin{enumerate}[resume]
     \item \textbf{Show that the moment-generating function of $Y = (X-\lambda)/\sqrt{\lambda}$ is given by}
     \begin{equation*}
     M_Y(t) = \exp\left(\lambda e^{t/\sqrt{\lambda}}-\sqrt{\lambda}t-\lambda\right)\textbf{.}
     \end{equation*}
   \end{enumerate}
-  
   \begin{align*}
   M_Y(t) &= E\left(\exp\left(\frac{X-\lambda}{\sqrt{\lambda}}t\right)\right) \\
   &= E\left(\exp\left(\frac{Xt}{\sqrt{\lambda}}\right)\cdot\exp\left(-\sqrt{\lambda}t\right)\right) \\
@@ -122,7 +135,8 @@ P(Y \leq \mu - a) &= P(\mu - Y \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}.
   &= e^{-\sqrt{\lambda}t-\lambda}\exp\left({e^{\frac{t}{\sqrt\lambda}}\lambda}\right) \\
   &= \exp\left(\lambda e^{t/\sqrt{\lambda}}-\sqrt{\lambda}t-\lambda\right).
   \end{align*}
-  \\
+  ~  
+  
   \begin{enumerate}[resume]
     \item \textbf{Use the expansion}
     \begin{equation*}
@@ -134,7 +148,6 @@ P(Y \leq \mu - a) &= P(\mu - Y \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}.
     \end{equation*}
     \textbf{and hence show that the distribution function of $Y$ converges to a standard normal distribution function as $\lambda\to\infty$.}
   \end{enumerate}
-  
   \begin{align*}
   \lim_{\lambda\to\infty}(M_Y(t)) &= \lim_{\lambda\to\infty}\left(\exp\left[\lambda e^{t/\sqrt{\lambda}}-\sqrt{\lambda}t-\lambda\right]\right) \\
   &= \lim_{\lambda\to\infty}\left(\exp\left[\lambda \sum_{i=0}^{\infty}\left(\frac{(t/\sqrt\lambda)^i}{i!}\right) - \sqrt{\lambda}t - \lambda\right]\right) \\
@@ -144,11 +157,11 @@ P(Y \leq \mu - a) &= P(\mu - Y \geq a) \leq \frac{\sigma^2}{\sigma^2+a^2}.
   &= \exp\left[t^2\left(1/2 + \lim_{\lambda\to\infty} \left[\sum_{i=3}^{\infty} \left(\frac{(t/\sqrt\lambda)^{i-2}}{i!}\right)\right]\right)\right] \\
   &= e^{t^2/2}.
   \end{align*}
-  This is the mgf of a standard normal distribution. That is, $\lim_{\lambda\to\infty}(M_Y(t)) = M_Z(t)$. The random variable $Y$ converges in distribution to a standard normal random variable as $\lambda\to\infty$.
-  \\
+  This is the mgf of a standard normal distribution. That is, $\lim_{\lambda\to\infty}(M_Y(t)) = M_Z(t)$. The random variable $Y$ converges in distribution to a standard normal random variable as $\lambda\to\infty$.\\
+  ~  
+  
   \item \textbf{$X$, the number of accidents per year at a given intersection, is assumed to have a Poisson distribution. Over the past few years, an average of 36 accidents per year have occurred at this intersection. If the number of accidents per year is at least 45, an intersection can qualify to be redesigned under an emergency program set up by the state. Approximate the probability that this intersection will come under the emergency program at the end of the next year.}
 \end{enumerate}
-
 Let $X \sim \text{Pois}(36)$.
 \begin{align*}
 P(X \geq 45) &= 1 - P(X \leq 44) \\
@@ -158,7 +171,7 @@ Hence, the probability that this intersection will come under the emergency prog
 
 &nbsp;
 
-Inline code used:
+The inline code used is shown below.
 
 ```{r}
 (1 - ppois(44, 36)) %>% round(4) %>% format(nsmall = 4)
@@ -168,18 +181,20 @@ Inline code used:
 \benum
   \item \textbf{Suppose $V_i$, $i \in [1, n] \cap \mathbb{N}$, are independent exponential random variables with rate 1. Denote}
   \begin{equation*}
-  X = \max\left(\left\{n : \sum_{i=1}^{n}\left(V_i\right) \leq \lambda \right\}\right)\textbf{,}
+  X = \max\left(\left\{n \left| \sum_{i=1}^{n}\left(V_i\right) \leq \lambda \right. \right\}\right)\textbf{,}
   \end{equation*}
   \textbf{so $X$ can be thought of as being the maximum number of exponentials having rate 1 that can be summed and still be less than or equal to $\lambda$.}
   \begin{enumerate}
     \item \textbf{Using properties of a Poisson process with rate 1, explain why $X$ has a Poisson distibution with parameter $\lambda$.}
   \end{enumerate}
-  The exponential distribution with parameter 1 can be defined as the distribution for the random variable that represents the time between two successive events in the Poisson process with parameter 1. Let $\{Y(t) : t\geq0\}$ be this particular Poisson process. Thus, the random variable $X$ represents the number of times that the time between two successive events has been observed within a time period of $\lambda$ in $\{Y(t) : t\geq0\}$. Since this is the same as the number of events that have occurred within this time period, $X \sim Y(t_0+\lambda)-Y(t_0) \sim \text{Pois}(\lambda)$, where $t_0 > 0$.  
+  The exponential distribution with parameter 1 can be defined as the distribution for the random variable that represents the time between two successive events in the Poisson process with parameter 1. Let $\{Y(t) : t\geq0\}$ be this particular Poisson process. Thus, the random variable $X$ represents the number of times that the time between two successive events has been observed within a time period of $\lambda$ in $\{Y(t) : t\geq0\}$. Let $(t_0, t_0 + \lambda)$ represent this particular time interval, where $t_0 \geq 0$. Since this is the same as the number of events that have occurred within $(t_0, t_0 + \lambda)$, $X = Y(t_0+\lambda)-Y(t_0) \sim \text{Pois}(\lambda)$.
+  
   &nbsp;  
+  
   \begin{enumerate}[resume]
     \item \textbf{Let $V_i = -log(U_i)$, $U_i \sim \text{Uniform}(0,1)$, for all $i \in [1, n] \cap \mathbb{N}$. Show that}
     \begin{equation}
-    X = \max\left(\left\{n : \prod_{i=1}^{n}(U_i) \geq e^{-\lambda}\right\}\right)\textbf{,}\label{eq:1}
+    X = \max\left(\left\{n \left| \prod_{i=1}^{n}(U_i) \geq e^{-\lambda} \right.\right\}\right)\textbf{,}\label{eq:1}
     \end{equation}
     \textbf{where $\prod_{i=1}^{0}(U_i) = 1$.}
   \end{enumerate}
@@ -192,14 +207,15 @@ Inline code used:
   \end{align*}
   Hence,
   \begin{align*}
-  X &= \max\left(\left\{n : \sum_{i=1}^{n}\left(V_i\right) \leq \lambda \right\}\right) \\
-  &= \max\left(\left\{n : \prod_{i=1}^{n}\left(U_i\right) \geq e^{-\lambda} \right\}\right).
+  X &= \max\left(\left\{n \left| \sum_{i=1}^{n}\left(V_i\right) \leq \lambda \right.\right\}\right) \\
+  &= \max\left(\left\{n \left| \prod_{i=1}^{n}\left(U_i\right) \geq e^{-\lambda} \right.\right\}\right).
   \end{align*}
   &nbsp;  
+  
   \begin{enumerate}[resume]
     \item \textbf{It can be shown that @ref(eq:1) is equivalent to}
     \begin{equation*}
-    X = \min\left(\left\{n : \prod_{i=1}^{n}\left(U_i\right) < e^{-\lambda} \right\}\right) - 1\textbf{.}
+    X = \min\left(\left\{n \left| \prod_{i=1}^{n}\left(U_i\right) < e^{-\lambda} \right.\right\}\right) - 1\textbf{.}
     \end{equation*}
     \textbf{This result may be used to simulate a Poisson random variable with parameter $\lambda$. If we continue generating Uniform(0, 1) random variables $U_i$ until their product falls below $e^{-\lambda}$, then the number required, minus 1, is Poisson with parameter $\lambda$. Implement this procedure in R to generate 1000 realizations of a Poisson random variable with parameter $\lambda = 5$. Produce the histogram of the generated values $\{x_i : i \in [1, 1000] \cap \mathbb{N}\}$. Find the mean of these values, and compare with its theoretical counterpart.}
   \end{enumerate}
@@ -231,19 +247,243 @@ ggplot(tibble(x_i = x_i)) +
 
 # Question 3
 
+\textbf{Let $\{X_n, n \in \mathbb{N} \setminus \{0\}\}$ be a sequence of i.i.d. Bernoulli random variables with parameter $\frac{1}{2}$. Let $X$ be a Bernoulli random variable taking the values 0 and 1 with probability $\frac{1}{2}$ each and let $Y = 1-X$.}
 
+\begin{enumerate}
+  \item \textbf{Explain why $X_n \xrightarrow{d} X$ and $X_n \xrightarrow{d} Y$.}
+\end{enumerate}
+\begin{align*}
+p_X(x) &= 
+\begin{cases}
+0.5 & \text{if $x = 1$} \\
+0.5 & \text{if $x = 0$} \\
+0 & \text{if otherwise}
+\end{cases}\\
+&= p_Y(x).
+\end{align*}
+\begin{align*}
+\lim_{n\to\infty}\left(p_{X_n}(x)\right) &= \lim_{n\to\infty}\left(\left.\begin{cases}
+0.5 & \text{if $x = 1$} \\
+0.5 & \text{if $x = 0$} \\
+0 & \text{if otherwise}
+\end{cases}\right\}\right) \\
+&= \begin{cases}
+0.5 & \text{if $x = 1$} \\
+0.5 & \text{if $x = 0$} \\
+0 & \text{if otherwise}
+\end{cases} \\
+&= p_X(x) = p_Y(x).
+\end{align*}
+Hence, $X_n \xrightarrow{d} X$ and $X_n \xrightarrow{d} Y$.
 
+&nbsp;  
 
+\begin{enumerate}[resume]
+  \item \textbf{Show that $X_n \not\xrightarrow{P} Y$, that is, $X_n$ does not converge to $Y$ in probability.}
+\end{enumerate}
+Assuming that $X_n$ and $Y$ are independent to each other,
+\begin{align*}
+X_n - Y &= x \text{ ~ ~ ~ ~with probability } \sum_{a\in\text{supp}(X)} \left(p_{X_n}(a)p_Y(x-a)\right) \\
+&= \begin{cases}
+-1 &\text{with probability 0.25} \\
+0 &\text{with probability 0.5} \\
+1 &\text{with probability 0.25} \\
+k &\text{with probability 0, where $k$ represents any other value}
+\end{cases}. \\
+\lvert X_n - Y \rvert &= \begin{cases}
+0 &\text{with probability 0.5} \\
+1 &\text{with probability 0.5} \\
+k &\text{with probability 0, where $k$ represents any other value}
+\end{cases}.
+\end{align*}
+Let $\varepsilon > 0$.
+\begin{align*}
+P\left(\lvert X_n - Y \rvert \geq \varepsilon \right) &= \begin{cases}
+0.5 & \text{if $\varepsilon \leq 1$} \\
+0 & \text{if $\varepsilon > 1$}
+\end{cases}.
+\end{align*}
+Hence, $P\left(\lvert X_n - Y \rvert \geq \varepsilon \right) \not= 0$ for all $\varepsilon > 0$, and $X_n \not\xrightarrow{P} Y$.
 
+&nbsp;  
 
+# Question 4
 
+**Consider the function**
+\begin{equation*}
+f(x_1, x_2) = \begin{cases}
+4x_1x_2\exp(-x_1^2) &\textbf{if $x_1 > 0$ and $x_2 > 0$} \\
+0 &\textbf{otherwise}
+\end{cases}\textbf{.}
+\end{equation*}
 
+**Check whether it is a valid joint probability density function.**
+\begin{align*}
+\int_{-\infty}^{\infty}\left(\int_{-\infty}^{\infty}\left(f(x_1, x_2)\right)\,\mathrm{d}x_1\right)\,\mathrm{d}x_2 &= 
+\int_{0}^{\infty}\left(\int_{0}^{\infty}\left(4x_1x_2\exp(-x_1^2)\right)\,\mathrm{d}x_1\right)\,\mathrm{d}x_2 \\
+&= \int_{0}^{\infty}\left(\int_{0}^{\infty}\left(-2 \frac{\mathrm{d}(-x_1^2)}{\mathrm{d}x_1} x_2 \exp(-x_1^2) \right)\,\mathrm{d}x_1\right)\,\mathrm{d}x_2 \\
+&= \int_{0}^{\infty}\left(\left[ -2 x_2 \exp(-x_1^2) \right]_{x_1 = 0}^{x_1 = \infty}\right)\,\mathrm{d}x_2 \\
+&= \int_{0}^{\infty}\left(2x_2\right)\,\mathrm{d}x_2 \\
+&\not= 1.
+\end{align*}
+Hence, $f(x_1, x_2)$ is not a valid probability density function.
 
+&nbsp;  
 
+# Question 5
 
+__Let $X$ be a discrete random variable with probability function $f_X(x)$, and suppose that $a \leq
+X \leq b$. Define the *tail generating function*__
+\begin{equation*}
+T_X(z) = \sum_{x=a}^{b-1}\left(z^xP(X>x)\right)\textbf{.}
+\end{equation*}
+\begin{enumerate}
+  \item \textbf{Show that $(1-z)T_X(z) = z^a - G_X(z)$, where $G_X(z)$ is the probability generating function of $X$. In particular, if $X$ is a non-negative discrete random variable, show that $(1-z)T_X(z) = 1 - G_X(z)$.}
+\end{enumerate}
+\begin{align*}
+(1-z)T_X(z) &= \sum_{x=a}^{b-1}\left(z^xP(X>x)\right) - \sum_{x=a}^{b-1}\left(z^{x+1}P(X>x)\right) \\
+&= \sum_{x=a}^{b-1}\left(z^xP(X>x)\right) - \sum_{x=a+1}^{b}\left(z^{x}P(X>x-1)\right) \\
+&= \sum_{x=a+1}^{b}\left(z^xP(X>x)\right) + z^aP(X > a) - \sum_{x=a+1}^{b}\left(z^{x}P(X>x-1)\right)\;\;\text{ since $P(X > b) = 0$} \\
+&= z^aP(X > a) + \sum_{x=a+1}^{b}\left(z^x[P(X>x) - P(X > x-1)]\right) \\
+&= z^a(1-P(X \leq a)) + \sum_{x=a+1}^{b}\left(z^x[P(X>x) - P(X > x) - P(X = x)]\right) \\
+&= z^a(1-P(X = a)) - \sum_{x=a+1}^{b}\left(z^xP(X = x)\right) \\
+&= z^a - \sum_{x=a}^{b}\left(z^xP(X = x)\right) \\
+&= z^a - G_X(z).
+\end{align*}
+If $X$ is non-negative and discrete, then $0 \leq X$, and substituting $a=0$,
+\begin{align*}
+(1-z)T_X(z) &= z^0 - G_X(z) \\
+&= 1 - G_X(z).
+\end{align*}
+&nbsp;  
 
+\begin{enumerate}[resume]
+  \item  \textbf{Using the result from (a) for a non-negative discrete random variable $X$, show that $E(X) = T_X(1)$ and $Var(X) = 2T'_X(1) + T_X(1) - (T_X(1))^2$.}
+\end{enumerate}
+\begin{align*}
+E(X) &= \left[\frac{\mathrm{d}}{\mathrm{d}z}\left(G_X(z)\right)\right](z=1) \\
+&= \left[\frac{\mathrm{d}}{\mathrm{d}z}\left(1 - (1-z)T_X(z)\right)\right](z=1)\;\;\text{ from part (a)}\\
+&= \left[T_X(z)-(1-z)T'_X(z)\right](z=1) \\
+&= T_X(1).
+\end{align*}
+\begin{align*}
+E(X(X-1)) &= \left[\frac{\mathrm{d}^2}{(\mathrm{d}z)^2}\left(G_X(z)\right)\right](z=1) \\
+&= \left[\frac{\mathrm{d}}{\mathrm{d}z}\left(T_X(z)-(1-z)T'_X(z)\right)\right](z=1) \\
+&= \left[T'_X(z)+T'_X(z)-(1-z)T''_X(z)\right](z=1) \\
+&= 2T'_X(1) \\
+E(X^2) &= 2T'_X(1) + E(X)\\
+&= 2T'_X(1) + T_X(1).
+\end{align*}
+\begin{align*}
+Var(X) &= E(X^2) - (E(X))^2 \\
+&= 2T'_X(1) + T_X(1) - (T_X(1))^2.
+\end{align*}
+&nbsp;  
 
+\begin{enumerate}[resume]
+  \item \textbf{Let random variables $\{Y_i, i \geq 1\}$ be independently and uniformly distributed on $[1, n]\cap \mathbb{N}$. Let $S_k = \sum_{i=1}^{k}(Y_i)$, and define $\tau_n = \min(\{k | S_k >n\})$. Thus, $\tau_n$ is the smallest number of the $Y_i$ required to achieve a sum exceeding $n$. Show that}
+  \begin{equation*}
+  P(S_j \leq n) = \frac{1}{n^j} \binom{n}{j}\textbf{.}
+  \end{equation*}
+\end{enumerate}
+The total number of ways that $1 \leq S_1 < S_2 < ... < S_k \leq n$ can occur is $\binom{n}{j}$. The total number of ways that $S_j \in \mathbb{N}$ can occur is $n^j$. Hence, $P(S_j \leq n) = \frac{1}{n^j} \binom{n}{j}$.  
+&nbsp;  
 
+\begin{enumerate}[resume]
+  \item \textbf{Show that $\tau_n \geq j + 1$ if and only if $S_j \leq n$.}
+\end{enumerate}
+\begin{align*}
+S_j \leq n &\Longleftrightarrow \max(\{k | S_k \leq n\}) \geq j \\
+&\Longleftrightarrow \min(\{k | S_k > n\}) - 1 \geq j \\
+&\Longleftrightarrow \tau_n \geq j + 1.
+\end{align*}
+&nbsp;  
+
+\begin{enumerate}[resume]
+  \item \textbf{Find the tail generating function $T_{\tau_n}(z) = \sum_{j=0}^{n}\left(z^j P(\tau_n > j)\right)$.}
+\end{enumerate}
+\begin{align*}
+T_{\tau_n}(z) &= \sum_{j=0}^{n}\left(z^j P(\tau_n > j)\right) \\
+&= \sum_{j=0}^{n}\left(z^j P(\tau_n \geq j+1)\right) \\
+&= \sum_{j=0}^{n}\left(z^j P(S_j \leq n)\right)\;\;\text{ from part (d)} \\
+&= \sum_{j=0}^{n}\left(z^j \frac{1}{n^j} \binom{n}{j}\right)\;\;\text{ from part (c)} \\
+&= \sum_{j=0}^{n}\left(\binom{n}{j} \left(\frac{z}{n}\right)^j 1^{n-j} \right) \\
+&= \left(1+\frac{z}{n}\right)^n\;\;\text{ from applying the binomial formula.}
+\end{align*}
+&nbsp;  
+
+\begin{enumerate}[resume]
+\item \textbf{Using the results from (b) and (e), calculate $E(\tau_n)$ and $Var(\tau_n)$.}
+\end{enumerate}
+\begin{align*}
+E(\tau_n) &= T_{\tau_n}(1) & Var(\tau_n) &= 2T'_{\tau_n}(1) + T_{\tau_n}(1) - (T_{\tau_n}(1))^2 \\
+&= \left(1+\frac{1}{n}\right)^n.    &   &= 2\left[n\left(1 + \frac{z}{n}\right)^{n-1}n^{-1} \right](z=1) + \left(1+\frac{1}{n}\right)^n - \left(1+\frac{1}{n}\right)^{2n} \\
+&   &   &= 2\left(1 + \frac{1}{n}\right)^{n-1} + \left(1+\frac{1}{n}\right)^n - \left(1+\frac{1}{n}\right)^{2n}.
+\end{align*}
+&nbsp;  
+
+\begin{enumerate}[resume]
+  \item \textbf{Find the probability generating function $G_{\tau_n}(z)$.}
+\end{enumerate}
+\begin{align*}
+G_{\tau_n}(z) &= 1 - (1-z)T_{\tau_n}(z) \\
+&= 1 - (1-z)\left(1+\frac{z}{n}\right)^n.
+\end{align*}
+&nbsp;  
+
+\begin{enumerate}[resume]
+\item \textbf{Find the probability function of $\tau_n$.}
+\end{enumerate}
+\begin{equation*}
+p_{\tau_n}(k) = \left\{\begin{aligned}
+&\frac{1}{k!}\left[\frac{\mathrm{d}^k}{(\mathrm{d}z)^k}\left(G_{\tau_n}(z)\right)\right](z=0)&&\text{if $k \in [2, n] \cap \mathbb{N}$} \\
+&0 &&\text{if otherwise}
+\end{aligned}\right. .
+\end{equation*}
+\begin{align*}
+\left[\frac{\mathrm{d}}{\mathrm{d}z}\left(G_{\tau_n}(z)\right)\right](z=0) &= \left[\frac{\mathrm{d}}{\mathrm{d}z}\left(1 - (1-z)\left(1+\frac{z}{n}\right)^n\right)\right](z=0) \\
+&= \left[\left(1+\frac{z}{n}\right)^n - (1-z)\left(1+\frac{z}{n}\right)^{n-1}\right](z=0) \\
+&= 0. \\
+\left[\frac{\mathrm{d}^2}{(\mathrm{d}z)^2}\left(G_{\tau_n}(z)\right)\right](z=0) &= \left[\left(1+\frac{z}{n}\right)^{n-1} + \left(1+\frac{z}{n}\right)^{n-1} - \frac{n-1}{n}(1-z)\left(1+\frac{z}{n}\right)^{n-2}\right](z=0) \\
+&= \left[2\left(1+\frac{z}{n}\right)^{n-1} - \frac{n-1}{n}(1-z)\left(1+\frac{z}{n}\right)^{n-2}\right](z=0) \\
+&= 2 - \frac{n-1}{n}. \\
+\left[\frac{\mathrm{d}^3}{(\mathrm{d}z)^3}\left(G_{\tau_n}(z)\right)\right](z=0) &= \left[2\frac{n-1}{n}\left(1+\frac{z}{n}\right)^{n-2} + \frac{n-1}{n}\left(1+\frac{z}{n}\right)^{n-2} - \frac{(n-1)(n-2)}{n^2}(1-z)\left(1+\frac{z}{n}\right)^{n-3}\right](z=0) \\
+&= \left[3\frac{n-1}{n}\left(1+\frac{z}{n}\right)^{n-2} - \frac{(n-1)(n-2)}{n^2}(1-z)\left(1+\frac{z}{n}\right)^{n-3}\right](z=0). \\
+\left[\frac{\mathrm{d}^4}{(\mathrm{d}z)^4}\left(G_{\tau_n}(z)\right)\right](z=0) &= \left[4\frac{(n-1)(n-2)}{n^2}\left(1+\frac{z}{n}\right)^{n-3} - \frac{(n-1)(n-2)(n-3)}{n^3}(1-z)\left(1+\frac{z}{n}\right)^{n-4}\right](z=0). \\\\\\
+\left[\frac{\mathrm{d}^k}{(\mathrm{d}z)^k}\left(G_{\tau_n}(z)\right)\right](z=0) &= \left[k\frac{P_{k-2}^{n-1}}{n^{k-2}}\left(1+\frac{z}{n}\right)^{n-(k-1)} - \frac{P_{k-1}^{n-1}}{n^{k-1}}(1-z)\left(1+\frac{z}{n}\right)^{n-k}\right](z=0) \\
+&= k\frac{P_{k-2}^{n-1}}{n^{k-2}} - \frac{P_{k-1}^{n-1}}{n^{k-1}} \\
+&= k\frac{\frac{(n-1)!}{((n-1)-(k-2))!}}{n^{k-2}} - \frac{\frac{(n-1)!}{((n-1)-(k-1))!}}{n^{k-1}} \\
+&= \frac{(n-1)!}{n^{k-2}}\left(\frac{k}{(n-k+1)!} - \frac{1}{n(n-k)!} \right) \\
+&= \frac{(n-1)!}{n^{k-2}}\left(\frac{kn}{n(n-k+1)!} - \frac{n-k+1}{n(n-k+1)!} \right) \\
+&= \frac{(n-1)!}{n^{k-2}}\left(\frac{kn-n+k-1}{n(n-k+1)!} \right) \\
+&= \frac{(n-1)!}{n^{k-2}} \cdot \frac{(n+1)(k-1)}{n(n-k+1)!} \\
+&= \frac{(k-1) \cdot (n+1)!}{n^{k}(n-k+1)!}. \\
+\frac{1}{k!}\left[\frac{\mathrm{d}^k}{(\mathrm{d}z)^k}\left(G_{\tau_n}(z)\right)\right](z=0) &= \frac{(k-1) \cdot (n+1)!}{n^{k} \cdot k!\,(n+1-k)!} \\
+&= \frac{(k-1) \binom{n+1}{k}}{n^{k}}.
+\end{align*}
+Hence,
+\begin{equation*}
+p_{\tau_n}(k) = \left\{\begin{aligned}
+&\frac{(k-1) \binom{n+1}{k}}{n^{k}}&&\text{if $k \in [2, n] \cap \mathbb{N}$} \\
+&0 &&\text{if otherwise}
+\end{aligned}\right. .
+\end{equation*}
+&nbsp;  
+
+\begin{enumerate}[resume]
+  \item \textbf{What is the limiting probability function of $\tau_n$ as $n\to\infty$?}
+\end{enumerate}
+\begin{align*}
+\lim_{n\to\infty}\left(\frac{(k-1) \binom{n+1}{k}}{n^{k}}\right) &= \lim_{n\to\infty}\left(\frac{(k-1) \cdot \frac{1}{k!} \cdot \prod_{j=0}^{k-1}\left(n+1-j\right)}{n^{k}}\right) \\
+&= \lim_{n\to\infty}\left((k-1) \cdot \frac{1}{k!} \cdot \prod_{j=0}^{k-1}\left(1+\frac{1-j}{n} \right)\right) \\
+&= \frac{k-1}{k!}.
+\end{align*}
+\begin{equation*}
+\text{So } \lim_{n\to\infty}\left(p_{\tau_n}(k)\right) = \left\{\begin{aligned}
+&\frac{k-1}{k!}&&\text{if $k \in \mathbb{N} \setminus \{0, 1\}$} \\
+&0 &&\text{if otherwise}
+\end{aligned}\right. .
+\end{equation*}
 
 
 
